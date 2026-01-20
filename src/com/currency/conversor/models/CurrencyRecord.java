@@ -1,4 +1,5 @@
 package com.currency.conversor.models;
 
-public record CurrencyRecord(String initialCurrency, String finalCurrency, double amount) {
+public record CurrencyRecord(String base_code, String target_code, double conversion_result) {
+
 }

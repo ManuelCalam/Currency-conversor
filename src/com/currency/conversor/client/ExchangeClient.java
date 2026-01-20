@@ -10,25 +10,22 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class ExchangeClient {
-    private String url = "https://v6.exchangerate-api.com/v6/febfbc2f3940eaca892fca4e/pair/";
     Gson gson = new Gson();
+    HttpClient client = HttpClient.newHttpClient();
 
-    public CurrencyRecord requestExchage(){
-
+    public CurrencyRecord requestExchage(String base_code, String target_code, double amount){
+        String url = "https://v6.exchangerate-api.com/v6/febfbc2f3940eaca892fca4e/pair/"+base_code+"/"+target_code+"/"+amount;
         try {
-            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             CurrencyRecord currencyRecord = gson.fromJson(response.body(), CurrencyRecord.class);
 
-
+            return currencyRecord;
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
-        return null;
     }
 }
